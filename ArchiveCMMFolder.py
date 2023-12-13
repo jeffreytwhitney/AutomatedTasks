@@ -1,7 +1,8 @@
 import os
-import sys
-import FolderArchiveLib
 import shutil
+import sys
+
+import FolderArchiveLib
 
 
 def run_test():

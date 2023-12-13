@@ -6,13 +6,20 @@ from tkinter import filedialog
 
 def GetFileOutputPath(source_file_path, ini_filename):
     file_extension = GetFileExtensionFromFilePath(source_file_path)
-    archive_folder = GetStoredIniValue("FileExtensionPaths", file_extension, ini_filename)
+    archive_folder = GetStoredIniValue(
+        "FileExtensionPaths", file_extension, ini_filename
+    )
     if archive_folder == "":
         archive_folder = filedialog.askdirectory()
         if archive_folder != "":
-            StoreIniValue(archive_folder, "FileExtensionPaths", file_extension, ini_filename)
+            StoreIniValue(
+                archive_folder, "FileExtensionPaths", file_extension, ini_filename
+            )
     if archive_folder != "":
-        archive_path = pathlib.Path.joinpath(pathlib.WindowsPath(archive_folder), pathlib.WindowsPath(source_file_path).name)
+        archive_path = pathlib.Path.joinpath(
+            pathlib.WindowsPath(archive_folder),
+            pathlib.WindowsPath(source_file_path).name,
+        )
         return archive_path
     else:
         return archive_folder
@@ -55,14 +62,14 @@ def StoreIniValue(ini_value, ini_section, ini_key, ini_filename):
     if not os.path.exists(ini_file_path):
         config.add_section(ini_section)
         config.set(ini_section, ini_key, ini_value)
-        with open(ini_file_path, 'w') as conf:
+        with open(ini_file_path, "w") as conf:
             config.write(conf)
     else:
         if not config.has_section(ini_section):
             config.add_section(ini_section)
         config.read(ini_file_path)
         config.set(ini_section, ini_key, ini_value)
-        with open(ini_file_path, 'w') as conf:
+        with open(ini_file_path, "w") as conf:
             config.write(conf)
 
 
@@ -86,7 +93,9 @@ def GetDirectoryFromFilePath(source_file_path):
 def GenerateFolderOutputPath(source_file_path, ini_filename):
     output_root_directory = GetFolderOutputPath(ini_filename)
     source_file_parent_folder = pathlib.WindowsPath(source_file_path).parts[-1]
-    return str(pathlib.WindowsPath(output_root_directory).joinpath(source_file_parent_folder))
+    return str(
+        pathlib.WindowsPath(output_root_directory).joinpath(source_file_parent_folder)
+    )
 
 
 def GetMicroVuFolderSubDirectory(directory_to_check):

@@ -8,8 +8,12 @@ import FolderArchiveLib
 def run_test():
     shutil.rmtree("C:\\temp\\archive\\Test\\", True)
     os.mkdir("C:\\temp\\archive\\Test\\")
-    FolderArchiveLib.CopyFolderWithOverwrite("C:\\temp\\source\\CopyToBackupTest\\M123456798", "testwOutputPath")
-    FolderArchiveLib.CopyFolderWithOverwrite("C:\\temp\\source\\CopyToBackupTest\\M123456798", "testwOutputPath")
+    FolderArchiveLib.CopyFolderWithOverwrite(
+        "C:\\temp\\source\\CopyToBackupTest\\M123456798", "testwOutputPath"
+    )
+    FolderArchiveLib.CopyFolderWithOverwrite(
+        "C:\\temp\\source\\CopyToBackupTest\\M123456798", "testwOutputPath"
+    )
     return
 
 

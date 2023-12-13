@@ -1,8 +1,8 @@
 import os
-import pathlib
 import shutil
-import ArchiveLib
 from tkinter import messagebox
+
+import ArchiveLib
 import FileArchiveLib
 
 
