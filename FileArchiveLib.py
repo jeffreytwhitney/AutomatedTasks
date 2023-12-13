@@ -74,7 +74,7 @@ def CopyFileWithFileNameAppend(current_filename, output_directory, show_messageb
         return
 
 
-def CopyMicroVuFile(source_filepath, ini_filename, show_messagebox=True):
+def ArchiveMicroVuFile(source_filepath, ini_filename, show_messagebox=True):
     output_root_directory = ArchiveLib.GetFolderOutputPath(ini_filename)
     mv_subDirectory = ArchiveLib.GetMicroVuFileSubDirectory(source_filepath)
     output_directory = os.path.join(output_root_directory, mv_subDirectory)

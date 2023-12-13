@@ -10,7 +10,9 @@ import FileArchiveLib
 def run_test():
     shutil.rmtree("C:\\temp\\archive\\Test\\", True)
     os.mkdir("C:\\temp\\archive\\Test\\")
-    FileArchiveLib.ArchiveOverlay("C:\\temp\\source\\ArchiveOverlayTest\\1A.dwg", "test")
+    files = os.scandir("C:\\temp\\source\\ArchiveOverlayTest\\")
+    for file in files:
+        FileArchiveLib.ArchiveOverlay(file.path, "test")
     return
 
 
