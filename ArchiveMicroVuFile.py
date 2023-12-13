@@ -1,5 +1,4 @@
 import os
-import pathlib
 import shutil
 import sys
 from tkinter import messagebox
@@ -21,7 +20,9 @@ if n == 1:
     run_test()
 else:
     for i in range(1, n):
-        if pathlib.WindowsPath(sys.argv[i]).suffix.upper != ".IWP":
+        file_path = sys.argv[i]
+        file_path = file_path.upper()
+        if not file_path.endswith(".IWP"):
             messagebox.showerror("Error", f"File '{sys.argv[i]}' is not a MicroVu file.")
             continue
         FileArchiveLib.ArchiveMicroVuFile(sys.argv[i], "ArchiveMicroVuFolder", True)
