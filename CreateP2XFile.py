@@ -6,13 +6,20 @@ from tkinter import messagebox
 
 
 def GetP2XFile(source_filepath):
-    if pathlib.WindowsPath(source_filepath).suffix.upper() != ".PRG":
-        messagebox.showerror("Error", f"File '{source_filepath}' is not a PC-DMIS file.")
+    file_path = sys.argv[i]
+    file_path = file_path.upper()
+    if not file_path.endswith(".PRG") and not file_path.endswith(".CAD"):
+        messagebox.showerror(
+            "Error", f"File '{source_filepath}' is not a PC-DMIS file."
+        )
         return
     output_filepath = str(pathlib.WindowsPath(source_filepath).with_suffix(".P2X"))
     if os.path.exists(output_filepath):
         return
-    shutil.copy("X:\\Quality Calibration\\Work in Progress\\Jeffrey\\2020 R2 CMM Program Templates\\1 Factory Templates\\Sample.P2X", output_filepath)
+    shutil.copy(
+        "X:\\Quality Calibration\\Work in Progress\\Jeffrey\\2020 R2 CMM Program Templates\\1 Factory Templates\\Sample.P2X",
+        output_filepath,
+    )
     return
 
 
