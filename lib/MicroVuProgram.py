@@ -95,15 +95,15 @@ class MicroVuProgram:
     # Properties
     @property
     def bring_part_to_metrology_index(self) -> int:
-        idx = next(
-                (i for i, l in enumerate(self.file_lines)
-                 if "Bring Part To Metrology 1Factory.jpg" in l), -1
+        return next(
+            (
+                i
+                for i, l in enumerate(self.file_lines)
+                if "Bring Part To Metrology 1Factory.jpg" in l
+            ),
+            -1,
         )
-        if idx > -1:
-            return idx
 
-        instructions_index = self.instructions_index
-        return -1 if instructions_index == -1 else instructions_index + 1
 
     @property
     def can_write_to_output_file(self) -> bool:

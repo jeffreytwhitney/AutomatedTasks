@@ -2,6 +2,8 @@ import os
 import shutil
 import sys
 
+from lib.MicroVuProcessor import process_file
+
 
 def run_test():
     shutil.rmtree("C:\\TEST\\AutomatedTasks\\Input\\", True)
@@ -10,6 +12,7 @@ def run_test():
         "C:\\TEST\\AutomatedTasks\\Reset\\10873 Housing.iwp",
         "C:\\TEST\\AutomatedTasks\\Input\\10873 Housing.iwp",
     )
+    process_file("C:\\TEST\\AutomatedTasks\\Input\\10873 Housing.iwp")
     return
 
 
@@ -20,5 +23,5 @@ if n == 1:
 else:
     for i in range(1, n):
         file_path = sys.argv[i]
-        FileArchiveLib.CopyFileWithOverwrite(file_path, "CopyFileToWIP")
+        process_file(file_path)
 exit()
