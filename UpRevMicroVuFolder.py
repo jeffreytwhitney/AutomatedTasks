@@ -55,10 +55,10 @@ n = len(sys.argv)
 if n == 1:
     run_test()
 else:
+    old_rev_name = simpledialog.askstring("Old Rev", "Enter Old Rev:")
+    new_rev_name = simpledialog.askstring("New Rev", "Enter NEW Rev:")
     for i in range(1, n):
         dir_path = sys.argv[i]
-        old_rev_name = simpledialog.askstring("Old Rev", "Enter Old Rev:")
-        new_rev_name = simpledialog.askstring("New Rev", "Enter NEW Rev:")
         new_dir_path = get_new_directory_name(dir_path, old_rev_name, new_rev_name)
         sub_directory = ArchiveLib.GetMicroVuFolderSubDirectory(dir_path)
         FolderArchiveLib.CopyFolderToSubDirectoryWithFileNameAppend(dir_path, sub_directory, "ArchiveMicroVuFolder", False)
