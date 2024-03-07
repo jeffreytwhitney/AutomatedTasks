@@ -2,7 +2,7 @@ import os
 import shutil
 import sys
 
-from lib.MicroVuProcessor import process_file
+from lib.MicroVuProcessor import remove_metrology_picture
 
 
 def run_test():
@@ -12,7 +12,7 @@ def run_test():
         "C:\\TEST\\AutomatedTasks\\Reset\\10873 Housing.iwp",
         "C:\\TEST\\AutomatedTasks\\Input\\10873 Housing.iwp",
     )
-    process_file("C:\\TEST\\AutomatedTasks\\Input\\10873 Housing.iwp")
+    remove_metrology_picture("C:\\TEST\\AutomatedTasks\\Input\\10873 Housing.iwp")
     return
 
 
@@ -23,5 +23,5 @@ if n == 1:
 else:
     for i in range(1, n):
         file_path = sys.argv[i]
-        process_file(file_path)
+        remove_metrology_picture(file_path)
 exit()
