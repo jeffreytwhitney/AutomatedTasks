@@ -17,6 +17,13 @@ def _remove_bring_to_metrology_picture(micro_vu: MicroVuProgram) -> None:
     del micro_vu.file_lines[idx]
 
 
+def _remove_dontmeasure_statements(micro_vu: MicroVuProgram) -> None:
+    for idx, line in enumerate(micro_vu.file_lines):
+        if " (DontMeasure)\n" in line:
+            new_line = line.replace(" (DontMeasure)", "")
+            micro_vu.file_lines[idx] = new_line
+
+
 def _write_file_to_harddrive(micro_vu: MicroVuProgram) -> None:
     try:
         with open(micro_vu.filepath, "w", encoding="utf-16-le", newline="\r\n") as f:
@@ -49,13 +56,15 @@ def _replace_rev_name(current_rev_name, old_rev, new_rev):
     search_string = f"REV{old_rev.upper()}"
     if search_string in current_rev_name:
         new_rev_name = current_rev_name.replace(search_string, f"REV_{new_rev}")
+        return new_rev_name
     search_string = f"REV {old_rev.upper()}"
     if search_string in current_rev_name:
         new_rev_name = current_rev_name.replace(search_string, f"REV_{new_rev}")
+        return new_rev_name
     search_string = f"REV_{old_rev.upper()}"
     if search_string in current_rev_name:
         new_rev_name = current_rev_name.replace(search_string, f"REV_{new_rev}")
-    return new_rev_name
+        return new_rev_name
 
 
 def _update_comments(micro_vu: MicroVuProgram, new_rev_letter: str) -> None:
@@ -78,24 +87,30 @@ def uprev_microvu(filepath: str, old_rev: str, new_rev: str) -> None:
         if old_report_path:
             if new_report_path := _rename_filepath(old_report_path, old_rev, new_rev):
                 micro_vu.report_filepath = new_report_path
-            else:
-                return
 
     if micro_vu.is_converted:
         micro_vu.rev_letter_field = new_rev.upper()
         old_export_path = micro_vu.export_filepath
         if new_export_path := _rename_filepath(old_export_path, old_rev, new_rev):
             micro_vu.export_filepath = new_export_path
-        else:
-            return
     else:
         old_partnumber_field = micro_vu.part_number_field
         if new_partnumber_field := _replace_rev_name(old_partnumber_field, old_rev, new_rev):
             micro_vu.part_number_field = new_partnumber_field
-        else:
-            return
 
     _update_comments(micro_vu, new_rev)
+    micro_vu.update_instruction_count()
+    _write_file_to_harddrive(micro_vu)
+
+
+def remove_dont_measure_statements(filepath: str) -> None:
+    if not filepath.upper().endswith(".IWP"):
+        return
+    if not os.path.exists(filepath):
+        return
+
+    micro_vu = MicroVuProgram(filepath)
+    _remove_dontmeasure_statements(micro_vu)
     micro_vu.update_instruction_count()
     _write_file_to_harddrive(micro_vu)
 

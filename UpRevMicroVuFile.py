@@ -9,8 +9,8 @@ from lib.MicroVuProcessor import uprev_microvu
 def run_test():
     shutil.rmtree("C:\\TEST\\AutomatedTasks\\Input\\", True)
     shutil.copytree("C:\\TEST\\AutomatedTasks\\Reset\\", "C:\\TEST\\AutomatedTasks\\Input\\")
-    FileArchiveLib.ArchiveMicroVuFile("C:\\TEST\\AutomatedTasks\\Reset\\311\\Pacing\\TEST REV_A\\TEST SIDE.iwp", "ArchiveMicroVuFolder", False)
-    uprev_microvu("C:\\TEST\\AutomatedTasks\\Reset\\311\\Pacing\\TEST REV_A\\TEST SIDE.iwp", "A", "B")
+    # FileArchiveLib.ArchiveMicroVuFile("C:\\TEST\\AutomatedTasks\\Reset\\311\\Pacing\\TEST SIDE.iwp", "ArchiveMicroVuFolder", False)
+    uprev_microvu("C:\\TEST\\AutomatedTasks\\Input\\311\\Pacing\\M956750A001 LENGTH- 1PART.iwp", "D", "E")
     return
 
 
