@@ -19,5 +19,4 @@ else:
     for i in range(1, n):
         new_file = sys.argv[i]
         remove_dont_measure_statements(new_file)
-
 exit()
