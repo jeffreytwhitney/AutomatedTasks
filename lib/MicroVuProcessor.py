@@ -75,6 +75,17 @@ def _update_comments(micro_vu: MicroVuProgram, new_rev_letter: str) -> None:
     micro_vu.comment = current_comment
 
 
+def uprev_cmm_filename(filepath: str, old_rev: str, new_rev: str) -> None:
+    filepath = filepath.upper()
+    if not filepath.upper().endswith(".PRG") and not filepath.upper().endswith(".CAD") and not filepath.upper().endswith(".P2X"):
+        return
+    if not os.path.exists(filepath):
+        return
+
+    new_filepath = _rename_filepath(filepath, old_rev, new_rev)
+    os.rename(filepath, new_filepath)
+
+
 def uprev_microvu(filepath: str, old_rev: str, new_rev: str) -> None:
     if not filepath.upper().endswith(".IWP"):
         return
