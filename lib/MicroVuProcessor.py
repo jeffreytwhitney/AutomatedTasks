@@ -93,12 +93,12 @@ def uprev_microvu(filepath: str, old_rev: str, new_rev: str) -> None:
         return
     micro_vu = MicroVuProgram(filepath)
 
-    if not micro_vu.is_smartprofile:
-        old_report_path = micro_vu.report_filepath
-        if old_report_path:
-            if new_report_path := _rename_filepath(old_report_path, old_rev, new_rev):
-                micro_vu.report_filepath = new_report_path
+    if micro_vu.is_smartprofile:
+        micro_vu.report_filepath = ""
 
+    elif old_report_path := micro_vu.report_filepath:
+        if new_report_path := _rename_filepath(old_report_path, old_rev, new_rev):
+            micro_vu.report_filepath = new_report_path
     if micro_vu.is_converted:
         micro_vu.rev_letter_field = new_rev.upper()
         old_export_path = micro_vu.export_filepath
