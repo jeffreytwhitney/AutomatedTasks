@@ -1,6 +1,7 @@
 import sys
 from tkinter import simpledialog
 
+# import win32com.client
 from lib.MicroVuProcessor import uprev_cmm_filename
 
 
@@ -23,4 +24,6 @@ else:
         new_file = sys.argv[i]
         uprev_cmm_filename(new_file, old_rev_name, new_rev_name)
 
+    # dmis_app = win32com.client.Dispatch("PCDLRN.Application")
+    # print(dmis_app.VersionString)
 exit()
