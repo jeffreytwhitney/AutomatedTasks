@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 from tkinter import simpledialog
 
@@ -8,7 +9,7 @@ def delete_cmm_program(cmm_location: str, cmm_program_name: str):
         for dir in dirs:
             found_it = dir.find(cmm_program_name)
             if found_it > -1:
-                print(dir)
+                shutil.rmtree(dir, ignore_errors=True)
     return
 
 
@@ -54,7 +55,8 @@ def call_delete(cmm_program_name: str):
 
 def trim_program_name(cmm_program_name: str):
     space_loc = cmm_program_name.rfind(" ")
-    return cmm_program_name[:space_loc] if space_loc else cmm_program_name
+    space_slash = cmm_program_name.rfind("\\")
+    return cmm_program_name[space_slash + 1:space_loc] if space_loc else cmm_program_name
 
 
 n = len(sys.argv)
