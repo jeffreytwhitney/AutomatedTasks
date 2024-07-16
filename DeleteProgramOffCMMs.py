@@ -9,7 +9,8 @@ def delete_cmm_program(cmm_location: str, cmm_program_name: str):
         for dir in dirs:
             found_it = dir.find(cmm_program_name)
             if found_it > -1:
-                shutil.rmtree(dir, ignore_errors=True)
+                filepath = os.path.join(root, dir)
+                shutil.rmtree(filepath, ignore_errors=True)
     return
 
 
@@ -53,18 +54,22 @@ def call_delete(cmm_program_name: str):
     delete_cmm_program("\\\\Rms-cmmx061\\cmm\\", cmm_program_name)
 
 
-def trim_program_name(cmm_program_name: str):
+def trim_program_name(cmm_program_name: str) -> str:
+    if space_slash := cmm_program_name.rfind("\\"):
+        cmm_program_name = cmm_program_name[space_slash + 1:]
+
     space_loc = cmm_program_name.rfind(" ")
-    space_slash = cmm_program_name.rfind("\\")
-    return cmm_program_name[space_slash + 1:space_loc] if space_loc else cmm_program_name
+    return cmm_program_name if space_loc == -1 else cmm_program_name[:space_loc]
 
 
 n = len(sys.argv)
 
 if n == 1:
-    program_name = simpledialog.askstring("Program Name", "Enter Program Name:")
-    call_delete(program_name)
+    program_name = trim_program_name(simpledialog.askstring("Program Name", "Enter Program Name:"))
+    if len(program_name) > 0:
+        call_delete(program_name)
 else:
     for i in range(1, n):
         new_file = trim_program_name(sys.argv[i])
-        call_delete(new_file)
+        if len(new_file) > 0:
+            call_delete(new_file)
