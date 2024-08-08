@@ -9,8 +9,8 @@ import FolderArchiveLib
 
 def run_test():
     dir_text = "X:\\Quality Calibration\\Work in Progress\\Jeffrey\\1Factory Conversion\\311\\JP100153081_REV C"
-    dirname = os.path.basename(dir_text)
-    messagebox.showinfo("Hi!", dirname)
+    dir_name = os.path.basename(dir_text)
+    messagebox.showinfo("Hi!", dir_name)
     return
 
 
