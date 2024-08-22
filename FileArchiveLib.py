@@ -135,3 +135,35 @@ def ArchiveOverlay(source_filepath, ini_filename):
     archive_directory = os.path.dirname(archive_filepath)
     messagebox.showinfo("Success", f"Archived '{source_filename}' to '{str(archive_directory)}' and renamed file to '{incremented_filename}'")
     return
+
+
+def ArchiveCVision(source_filepath, ini_filename):
+    if WindowsPath(source_filepath).suffix.upper() != ".DXF":
+        messagebox.showerror("Error", f"File '{source_filepath}' is not an overlay.")
+        return
+
+    archive_filepath = ArchiveLib.GetFileOutputPath(source_filepath, ini_filename)
+    if archive_filepath == "":
+        messagebox.showerror("Error", f"Could not retrieve archive filepath.")
+        return
+
+    incremented_filepath = GetIncrementedFilePath(source_filepath)
+    if incremented_filepath == "":
+        messagebox.showerror("Error", f"Could not retrieve incremented filepath.")
+        return
+
+    if os.path.exists(incremented_filepath):
+        messagebox.showerror("Error", f"File '{incremented_filepath}' already exists.")
+        return
+
+    if os.path.exists(archive_filepath):
+        user_response = messagebox.askyesno("Are You Sure?", f"Directory '{archive_filepath}' already exists. Overwrite?")
+        if not user_response:
+            return
+    shutil.copy(source_filepath, archive_filepath)
+    os.rename(source_filepath, incremented_filepath)
+    source_filename = WindowsPath(source_filepath).name
+    incremented_filename = WindowsPath(incremented_filepath).name
+    archive_directory = os.path.dirname(archive_filepath)
+    messagebox.showinfo("Success", f"Archived '{source_filename}' to '{str(archive_directory)}' and renamed file to '{incremented_filename}'")
+    return
