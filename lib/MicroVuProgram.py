@@ -111,6 +111,17 @@ class MicroVuProgram:
         )
 
     @property
+    def anoka_dumbass_smartprofile_call_index(self) -> int:
+        return next(
+            (
+                i
+                for i, l in enumerate(self.file_lines)
+                if "AutoStartSProfile.bat" in l
+            ),
+            -1,
+        )
+
+    @property
     def can_write_to_output_file(self) -> bool:
         return not os.path.exists(self.output_filepath)
 

@@ -17,6 +17,14 @@ def _remove_bring_to_metrology_picture(micro_vu: MicroVuProgram) -> None:
     del micro_vu.file_lines[idx]
 
 
+def _remove_dumbass_anoka_smartprofile_call(micro_vu: MicroVuProgram) -> None:
+    idx = micro_vu.anoka_dumbass_smartprofile_call_index
+    if idx > -1:
+        del micro_vu.file_lines[idx + 2]
+        del micro_vu.file_lines[idx + 1]
+        del micro_vu.file_lines[idx]
+
+
 def _remove_dontmeasure_statements(micro_vu: MicroVuProgram) -> None:
     for idx, line in enumerate(micro_vu.file_lines):
         if " (DontMeasure)\n" in line:
@@ -139,3 +147,17 @@ def remove_metrology_picture(filepath: str) -> None:
     _remove_bring_to_metrology_picture(micro_vu)
     micro_vu.update_instruction_count()
     _write_file_to_harddrive(micro_vu)
+
+
+def remove_dumbass_anoka_smartprofile_call(filepath: str) -> None:
+    if not filepath.upper().endswith(".IWP"):
+        return
+    if not os.path.exists(filepath):
+        return
+
+    micro_vu = MicroVuProgram(filepath)
+    if micro_vu.anoka_dumbass_smartprofile_call_index > -1:
+        print(micro_vu.filepath)
+        _remove_dumbass_anoka_smartprofile_call(micro_vu)
+        micro_vu.update_instruction_count()
+        _write_file_to_harddrive(micro_vu)
