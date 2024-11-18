@@ -1,4 +1,8 @@
 import os
+import os.path
+import shutil
+
+import FileArchiveLib
 
 
 def FindFilePathByDirectoryName(root_paths: list[str], dir_name: str, file_name) -> str:
@@ -19,23 +23,31 @@ def UpdateExportLocationInMicroVu(file_path: str, old_path: str, new_path: str):
         file_handle.write(file_string)
 
 
-def UpdateArchiveReplaceMicroVus(archive_directories: list[str], input_directory: str, output_directory: str):
+def UpdateArchiveReplaceMicroVus(archive_directories: list[str], input_directory: str, one_factory_rootpath: str):
     for root, dirs, files in os.walk(input_directory):
         for file in files:
             if file.lower().endswith(".iwp"):
                 print(file)
 
-                file_path = os.path.join(root, file)
-                directory_name = os.path.basename(os.path.dirname(file_path))
-                output_path = FindFilePathByDirectoryName(archive_directories, directory_name, file)
-                print(output_path)
-                # UpdateExportLocationInMicroVu(file_path, "Z:\\", "C:\\MvDup\\Input")
-                # FileArchiveLib.ArchiveMicroVuFile(file_path, "ArchiveMicroVuFolder", False)
+                input_file_path = os.path.join(root, file)
+                directory_name = os.path.basename(os.path.dirname(input_file_path))
+                if archive_filepath := FindFilePathByDirectoryName(archive_directories, directory_name, file):
+                    FileArchiveLib.ArchiveMicroVuFile(archive_filepath, "ArchiveMicroVuFolder", False)
+                    os.remove(archive_filepath)
+                    if not os.listdir(os.path.dirname(archive_filepath)):
+                        os.rmdir(os.path.dirname(archive_filepath))
+                    output_directory = os.path.join(one_factory_rootpath, directory_name)
+                    if not os.path.isdir(output_directory):
+                        os.mkdir(output_directory)
+                    output_filepath = os.path.join(output_directory, file)
+                    if os.path.isfile(output_filepath):
+                        os.remove(input_file_path)
+                    shutil.move(input_file_path, output_filepath)
+                    if not os.listdir(os.path.dirname(input_file_path)):
+                        os.rmdir(os.path.dirname(input_file_path))
 
 
-untested_file_path = "V:\\Inspect Programs\\Micro-Vu\\1Factory_Untested\\311\\"
-one_factory_path = "V:\\Inspect Programs\\Micro-Vu\\Approved Programs\\311\\1Factory\\"
-old_directories: list[str] = ["V:\\Inspect Programs\\Micro-Vu\\Approved Programs\\311\\additive\\",
-                              "V:\\Inspect Programs\\Micro-Vu\\Approved Programs\\311\\ortho\\",
-                              "V:\\Inspect Programs\\Micro-Vu\\Approved Programs\\311\\pacing\\"]
+untested_file_path = "V:\\Inspect Programs\\Micro-Vu\\1Factory_Untested\\420\\"
+one_factory_path = "V:\\Inspect Programs\\Micro-Vu\\Approved Programs\\420\\1Factory\\"
+old_directories: list[str] = ["V:\\Inspect Programs\\Micro-Vu\\Approved Programs\\420\\ortho\\"]
 UpdateArchiveReplaceMicroVus(old_directories, untested_file_path, one_factory_path)
