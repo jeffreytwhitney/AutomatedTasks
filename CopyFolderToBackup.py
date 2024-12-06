@@ -24,4 +24,5 @@ if n == 1:
 else:
     for i in range(1, n):
         FolderArchiveLib.CopyFolderWithOverwrite(sys.argv[i], "CopyFolderToBackup")
+        shutil.rmtree(sys.argv[i], True)
 exit()
