@@ -4,6 +4,21 @@ import pathlib
 from tkinter import filedialog
 
 
+def GetFileOutputDirectory(source_file_path, ini_filename):
+    file_extension = GetFileExtensionFromFilePath(source_file_path)
+    archive_folder = GetStoredIniValue(
+        "FileExtensionPaths", file_extension, ini_filename
+    )
+    if archive_folder == "":
+        archive_folder = filedialog.askdirectory()
+        if archive_folder != "":
+            StoreIniValue(
+                archive_folder, "FileExtensionPaths", file_extension, ini_filename
+            )
+    if archive_folder != "":
+        return archive_folder
+
+
 def GetFileOutputPath(source_file_path, ini_filename):
     file_extension = GetFileExtensionFromFilePath(source_file_path)
     archive_folder = GetStoredIniValue(

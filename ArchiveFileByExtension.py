@@ -2,6 +2,7 @@ import os
 import shutil
 import sys
 
+import ArchiveLib
 import FileArchiveLib
 
 
@@ -20,5 +21,7 @@ if n == 1:
     run_test()
 else:
     for i in range(1, n):
-        FileArchiveLib.CopyFileWithFileNameAppend(sys.argv[i], "ArchiveFileByExtension", True)
+        output_root_directory = ArchiveLib.GetFileOutputDirectory(sys.argv[i], "ArchiveFileByExtension")
+        FileArchiveLib.CopyFileWithFileNameAppend(sys.argv[i], output_root_directory, True)
+        
 exit()
